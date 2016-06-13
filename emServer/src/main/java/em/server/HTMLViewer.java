@@ -11,30 +11,8 @@ public class HTMLViewer {
     private String html = "";
 
     private HTMLViewer(String htmlPath, Map<String, Object> params) {
-//        InputStream resourceAsStream = HTMLViewer.class.getClassLoader().getResourceAsStream(htmlPath);
-//        byte[] result = null;
-//        try {
-//            result = new byte[resourceAsStream.available()];
-//            int resultArrayIndex = 0;
-//            while (true) {
-//                int read = resourceAsStream.read();
-//                if(read == -1) {
-//                    break;
-//                } else {
-//                    result[resultArrayIndex++] = (byte) read;
-//                }
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                resourceAsStream.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
         try {
-            FileReader fileReader = new FileReader("/"+htmlPath);
+            FileReader fileReader = new FileReader("/"+htmlPath, true);
             String parsedHtml = new String(fileReader.getBytes());
 
             if(params != null) {

@@ -12,7 +12,7 @@ public class FileReader {
 
     private static final Map<String, byte[]> cache = new HashMap<>();
 
-    public FileReader(String path) throws FailedGetTheFile {
+    public FileReader(String path, boolean setToCache) throws FailedGetTheFile {
         if(cache.get(path) != null) {
             bytes = cache.get(path);
         } else {
@@ -33,7 +33,7 @@ public class FileReader {
                     fileBytes[fileBytesCurrentIndex++] = (byte) currentByte;
                 }
                 this.bytes = fileBytes;
-                cache.put(path, fileBytes);
+                if(setToCache) cache.put(path, fileBytes);
             } catch (Exception e) {
                 throw new FailedGetTheFile(path);
             } finally {

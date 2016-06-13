@@ -1,41 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="galleryApp">
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="/images/favicon.png" type="image/png">
     <title>#title</title>
+
+
+    <link href="/stylesheets/main.css" rel="stylesheet" type="text/css"/>
+    <link href="/stylesheets/editPhotoWindow.css" rel="stylesheet" type="text/css"/>
+
+    <script src="/libs/angular.js"></script>
+    <script src="/javascript/main.js"></script>
+    <script src="/javascript/services/UploadFileService.js"></script>
+    <script src="/javascript/entities/UploadPhotoItem.js"></script>
+    <script src="/javascript/controllers/uploadPhotosBlockCtrl.js"></script>
+    <script src="/javascript/directives/uploadPhotosBlock.js"></script>
 </head>
 <body>
-<div>
-    <button id="openWS">Open WS</button>
+
+<div class="photoGroup">
+    <h3 class="groupTitle">16 Марта 2016</h3>
+    <div class="photos">
+        <div class="photoBlock">
+            <img class="photoItem" src="/images/photos/1.jpg"  alt="My photo"/>
+            <div class="photoHover">
+            </div>
+        </div>
+        <div class="photoBlock">
+            <img class="photoItem" src="/images/photos/2.jpg"/>
+            <div class="photoHover">
+            </div>
+        </div>
+        <div class="photoBlock">
+            <img class="photoItem" src="/images/photos/3.jpg"/>
+            <div class="photoHover">
+            </div>
+        </div>
+        <div class="photoBlock">
+            <img class="photoItem" src="/images/photos/4.jpg"/>
+            <div class="photoHover">
+            </div>
+        </div>
+        <div class="photoBlock">
+            <img class="photoItem" src="/images/photos/5.jpg"/>
+            <div class="photoHover">
+            </div>
+        </div>
+    </div>
 </div>
 
-#bodyContent
+<div id="uploadPhotosBlock" upload-photos-block ng-controller="uploadPhotosBlockCtrl">
+    <div class="moveUploadPhotosBlockBtn" id="openUploadPhotosBlockBtn" ng-click="showUploadPhotosBlock()"></div>
+    <div class="moveUploadPhotosBlockBtn" id="closeUploadPhotosBlockBtn" ng-click="hideUploadPhotosBlock()"></div>
 
-<form method="post" action="/uploadFile" enctype="multipart/form-data">
-    <input type="file" name="someFile"/>
-    <br/>
-    <input type="file" name="someFile1"/>
-    <br/>
-    <input type="file" name="someFile2"/>
-    <br/>
-    <input type="text" name="username" placeholder="username"/>
-    <br/>
-    <input type="file" name="someFile3"/>
-    <br/>
-    <input type="file" name="someFile4"/>
-    <br/>
-    <label>
-        sex
-        <input type="radio" name="sex" value="male"/>
-        <input type="radio" name="sex" value="female"/>
-    </label>
-    <br/>
-    <input type="file" name="someFile5"/>
-    <br/>
-    <input type="submit"/>
-</form>
+    <div id="uploadFilesControlsBlock">
+        <div class="uploadFilesControl" id="selectPhotoBtn" ng-click="selectPhotos()"></div>
+        <div class="uploadFilesControl" id="selectVideoBtn" ng-click="selectVideo()"></div>
+        <div class="uploadFilesControl" id="defaultSettingsBtn"></div>
+        <div class="uploadFilesControl" id="uploadToServerBtn"></div>
+        <div class="uploadFilesControl" id="removeAllSelectedFiles"></div>
+    </div>
 
-<script src="/javascript/main.js"></script>
+    <div id="selectedPhotosBlock">
+        <div class="uploadedFileBlock" ng-repeat="uploadFile in UploadFileService.getUploadFiles()">
+            <img class="uploadedPhotoItem" ng-src="{{ uploadFile.thumbnailBase64Url }}" alt="{{ uploadFile.file.name }}"/>
+            <div class="uploadFileControlsBlock">
+                <div class="uploadFileControl removeUploadFileControl" ng-click="removeUploadFile(uploadFile)"></div>
+                <div class="uploadFileControl editUploadFileControl"></div>
+                <div class="uploadFileControl settingsUploadFileControl"></div>
+                <div style="clear: both"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="editPhotoWindow">
+    <div id="closeEditPhotoWindow"></div>
+</div>
+
 </body>
 </html>

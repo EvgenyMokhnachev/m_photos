@@ -15,7 +15,7 @@ public class StaticCtrl {
     @HttpMap(path = ".*.js")
     public void javascript(HttpRequest request, HttpResponse response){
         try {
-            FileReader fileReader = new FileReader(WEB_APP_PATH + request.getPath());
+            FileReader fileReader = new FileReader(WEB_APP_PATH + request.getPath(), true);
             response.setContent(fileReader.getBytes());
         } catch (FailedGetTheFile failedGetTheFile) {
             response.setStatusCode(HTTPStatusCode.NOT_FOUND);
@@ -23,15 +23,37 @@ public class StaticCtrl {
         response.setContentType(ContentType.TEXT_JAVASCRIPT);
     }
 
+    @HttpMap(path = ".*.jpg")
+    public void imageJpg(HttpRequest request, HttpResponse response){
+        try {
+            FileReader fileReader = new FileReader(WEB_APP_PATH + request.getPath(), true);
+            response.setContent(fileReader.getBytes());
+        } catch (FailedGetTheFile failedGetTheFile) {
+            response.setStatusCode(HTTPStatusCode.NOT_FOUND);
+        }
+        response.setContentType(ContentType.IMAGE_JPG);
+    }
+
     @HttpMap(path = ".*.png")
     public void imagePng(HttpRequest request, HttpResponse response){
         try {
-            FileReader fileReader = new FileReader(WEB_APP_PATH + request.getPath());
+            FileReader fileReader = new FileReader(WEB_APP_PATH + request.getPath(), true);
             response.setContent(fileReader.getBytes());
         } catch (FailedGetTheFile failedGetTheFile) {
             response.setStatusCode(HTTPStatusCode.NOT_FOUND);
         }
         response.setContentType(ContentType.IMAGE_PNG);
+    }
+
+    @HttpMap(path = ".*.css")
+    public void stylesheetCSS(HttpRequest request, HttpResponse response){
+        try {
+            FileReader fileReader = new FileReader(WEB_APP_PATH + request.getPath(), true);
+            response.setContent(fileReader.getBytes());
+        } catch (FailedGetTheFile failedGetTheFile) {
+            response.setStatusCode(HTTPStatusCode.NOT_FOUND);
+        }
+        response.setContentType(ContentType.TEXT_CSS);
     }
 
 }
