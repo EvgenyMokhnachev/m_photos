@@ -1,7 +1,7 @@
 (function(){
     'use strict';
 
-    angular.module("galleryApp").controller('uploadPhotosBlockCtrl', ['$scope', 'UploadFileService', function($scope, UploadFileService) {
+    angular.module("galleryApp").controller('uploadPhotosBlockCtrl', ['$scope', 'UploadFileService', 'EditPhotoService', function($scope, UploadFileService, EditPhotoService) {
 
         $scope.UploadFileService = UploadFileService;
 
@@ -54,6 +54,11 @@
 
         $scope.removeUploadFile = function(uploadFile){
             UploadFileService.removeUploadFile(uploadFile);
+        };
+
+        $scope.editPhotoItem = function(uploadFile){
+            EditPhotoService.showEditor = true;
+            EditPhotoService.editUploadFileItem = uploadFile;
         };
 
     }]);

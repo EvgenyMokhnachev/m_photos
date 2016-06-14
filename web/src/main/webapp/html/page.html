@@ -5,16 +5,30 @@
     <link rel="icon" href="/images/favicon.png" type="image/png">
     <title>#title</title>
 
-
+    <!-- STYLESHEETS -->
     <link href="/stylesheets/main.css" rel="stylesheet" type="text/css"/>
     <link href="/stylesheets/editPhotoWindow.css" rel="stylesheet" type="text/css"/>
 
+    <!-- LIBS -->
+    <script src="/libs/jquery-3.0.0.js"></script>
     <script src="/libs/angular.js"></script>
+
+    <!-- APPS -->
     <script src="/javascript/main.js"></script>
-    <script src="/javascript/services/UploadFileService.js"></script>
+
+    <!-- ENTITIES -->
     <script src="/javascript/entities/UploadPhotoItem.js"></script>
+
+    <!-- CONTROLLERS -->
     <script src="/javascript/controllers/uploadPhotosBlockCtrl.js"></script>
+    <script src="/javascript/controllers/EditPhotoWindowCtrl.js"></script>
+
+    <!-- DIRECTIVES -->
     <script src="/javascript/directives/uploadPhotosBlock.js"></script>
+
+    <!-- SERVICES -->
+    <script src="/javascript/services/EditPhotoService.js"></script>
+    <script src="/javascript/services/UploadFileService.js"></script>
 </head>
 <body>
 
@@ -66,7 +80,7 @@
             <img class="uploadedPhotoItem" ng-src="{{ uploadFile.thumbnailBase64Url }}" alt="{{ uploadFile.file.name }}"/>
             <div class="uploadFileControlsBlock">
                 <div class="uploadFileControl removeUploadFileControl" ng-click="removeUploadFile(uploadFile)"></div>
-                <div class="uploadFileControl editUploadFileControl"></div>
+                <div class="uploadFileControl editUploadFileControl" ng-click="editPhotoItem(uploadFile)"></div>
                 <div class="uploadFileControl settingsUploadFileControl"></div>
                 <div style="clear: both"></div>
             </div>
@@ -75,8 +89,38 @@
 
 </div>
 
-<div id="editPhotoWindow">
-    <div id="closeEditPhotoWindow"></div>
+<div id="editPhotoWindow" ng-controller="EditPhotoWindowCtrl" ng-show="EditPhotoService.showEditor">
+    <div id="editPhotoControls">
+        <div class="editPhotoControl" id="changeRGBBtn">
+            <div id="changeRGBControls">
+                <label class="changeRGBControl" id="changeRedControl">
+                    <span></span>
+                    <input type="range" min="0" max="255" step="1" ng-model="EditPhotoService.rgb.red"/>
+                </label>
+                <label class="changeRGBControl" id="changeGreenControl">
+                    <span></span>
+                    <input type="range" min="0" max="255" step="1" ng-model="EditPhotoService.rgb.green"/>
+                </label>
+                <label class="changeRGBControl" id="changeBlueControl">
+                    <span></span>
+                    <input type="range" min="0" max="255" step="1" ng-model="EditPhotoService.rgb.blue"/>
+                </label>
+                <!--<div class="changeRGBControl" id="changeRedControl">-->
+                    <!--<div class="changeRGBControlScroller"></div>-->
+                <!--</div>-->
+                <!--<div class="changeRGBControl" id="changeGreenControl" change-r-b-g-control="green">-->
+                    <!--<div class="changeRGBControlScroller"></div>-->
+                <!--</div>-->
+                <!--<div class="changeRGBControl" id="changeBlueControl" change-r-b-g-control="blue">-->
+                    <!--<div class="changeRGBControlScroller"></div>-->
+                <!--</div>-->
+            </div>
+        </div>
+        <div class="editPhotoControl" id="closeEditPhotoWindowBtn" ng-click="closeEditor()"></div>
+        <div class="editPhotoControl" id="saveEditedPhotoBtn"></div>
+        <div style="clear: both"></div>
+    </div>
+    <canvas id="editPhotoCanvas"></canvas>
 </div>
 
 </body>
